@@ -1,0 +1,23 @@
+{
+  "name": "jlabs-intern-developer-assessment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:docker": "docker compose watch",
+    "stop:docker": "docker compose down && docker volume prune -f"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/br14nn/jlabs-intern-developer-assessment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/br14nn/jlabs-intern-developer-assessment/issues"
+  },
+  "homepage": "https://github.com/br14nn/jlabs-intern-developer-assessment#readme"
+}
