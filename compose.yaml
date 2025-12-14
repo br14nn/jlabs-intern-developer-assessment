@@ -36,7 +36,9 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
-      POSTGRES_DB: demo
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/18/docker
   pgadmin:
@@ -53,6 +55,35 @@ services:
 
       # Don't require a "master" password after logging in
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    configs:
+      - source: pgadmin-pgpass
+        target: /config/pgpass
+        uid: "5050"
+        gid: "5050"
+        mode: 0400
+      - source: pgadmin-servers
+        target: /pgadmin4/servers.json
+        mode: 0444
 
 volumes:
   postgres_data:
+
+configs:
+  pgadmin-pgpass:
+    content: |
+      postgres:5432:*:postgres:secret
+  pgadmin-servers:
+    content: |
+      {
+        "Servers": {
+          "1": {
+            "Name": "Local Postgres",
+            "Group": "Servers",
+            "Host": "postgres",
+            "Port": 5432,
+            "MaintenanceDB": "postgres",
+            "Username": "postgres",
+            "PassFile": "/config/pgpass"
+          }
+        }
+      }
