@@ -9,8 +9,6 @@ export class UserService {
     try {
       const res = await this.prisma.user.findMany();
 
-      console.log('hello world');
-
       return {
         results: res,
         error: false,
