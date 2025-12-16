@@ -38,13 +38,13 @@ const SearchHistorySheet = () => {
           </SheetTitle>
         </SheetHeader>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col-reverse">
           {data?.results.map((history: any, index: number) => (
             <div key={`${history.id}-${index}`}>
-              <Separator />
               <div className="px-4 py-2">
                 <p className="text-center text-white">{history.ip_address}</p>
               </div>
+              <Separator />
             </div>
           ))}
           <Separator />

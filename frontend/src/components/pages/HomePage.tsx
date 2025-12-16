@@ -1,13 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { AlertCircle } from "lucide-react";
+
 import IPGeoInfoCard from "../IPGeoInfoCard";
 import IPSearchBar from "../IPSearchBar";
-import { useQuery } from "@tanstack/react-query";
-import { Alert, AlertTitle } from "../ui/alert";
-import { AlertCircle } from "lucide-react";
-import { getIPInfo } from "@/lib/api/ipInfo.api";
 import SearchHistorySheet from "../SearchHistorySheet";
+import { Alert, AlertTitle } from "../ui/alert";
+
+import { getIPInfo } from "@/lib/api/ipInfo.api";
+import { createSearchHistory } from "@/lib/api/search-history.api";
 
 const HomePage = () => {
   const [ipSearchValue, setIpSearchValue] = useState<string>("");
@@ -17,9 +20,15 @@ const HomePage = () => {
     queryFn: async () => await getIPInfo(ipSearchValue),
   });
 
+  const mutation = useMutation({
+    mutationFn: async (ipAddress: string) => createSearchHistory(ipAddress),
+    onSuccess: (data) => console.log(data),
+  });
+
   const handleIPSearchBarSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    mutation.mutate(ipSearchValue);
     refetch();
   };
 
