@@ -12,7 +12,7 @@ interface IPSearchBarProps {
 const IPSearchBar = ({ onSubmit, onChange, value }: IPSearchBarProps) => {
   return (
     <form
-      className="flex w-full max-w-80 flex-col gap-2 p-4 md:max-w-140 md:flex-row"
+      className="flex w-full max-w-80 flex-col gap-2 md:max-w-140 md:flex-row"
       onSubmit={onSubmit}
     >
       <Input
