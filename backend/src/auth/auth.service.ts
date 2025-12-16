@@ -15,6 +15,30 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  async verify(authHeader: string): Promise<IResponse> {
+    try {
+      const payload = await this.jwtService.verifyAsync(
+        authHeader.split('Bearer ')[1],
+        {
+          secret: process.env.JWT_SECRET,
+        },
+      );
+
+      return {
+        results: payload,
+        error: false,
+        message: 'authenticated',
+      };
+    } catch (error) {
+      console.log(error);
+      throw new UnauthorizedException({
+        results: null,
+        error,
+        message: 'Unauthorized',
+      });
+    }
+  }
+
   async login(loginDto: LoginDto): Promise<IResponse> {
     try {
       const res = await this.prismaService.user.findFirst({
