@@ -59,7 +59,7 @@ const IPGeoInfoCard = ({
           <div className="grid grid-cols-2">
             <div className="flex flex-col items-center">
               <p className="text-sm text-neutral-500">City</p>
-              <p className="text-lg font-medium">{city}</p>
+              <p className="text-center text-lg font-medium">{city}</p>
             </div>
             <div className="flex flex-col items-center">
               <p className="text-sm text-neutral-500">Region</p>
