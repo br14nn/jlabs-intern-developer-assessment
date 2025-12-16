@@ -11,16 +11,26 @@ import {
 } from "./ui/card";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "./ui/field";
 import { Input } from "./ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { backendAPI } from "@/lib/axios";
+import { storeAccessToken } from "@/lib/actions/login.actions";
 
-interface LoginCredentials {
+interface ILoginCredentials {
   username: string;
   password: string;
 }
 
 const LoginCard = () => {
-  const [loginCredentials, SetLoginCredentials] = useState<LoginCredentials>({
+  const [loginCredentials, SetLoginCredentials] = useState<ILoginCredentials>({
     username: "",
     password: "",
+  });
+
+  const login = useMutation({
+    mutationFn: (credentials: ILoginCredentials) =>
+      backendAPI.post("/api/auth/login", credentials),
+    onSuccess: ({ data }) => storeAccessToken(data.results.access_token),
+    onError: (error: any) => console.error(error.response || error.message),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,8 +45,7 @@ const LoginCard = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(`start login`);
-    console.log(loginCredentials);
+    login.mutate({ ...loginCredentials });
   };
 
   return (
