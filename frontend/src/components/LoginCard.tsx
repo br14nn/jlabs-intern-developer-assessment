@@ -1,6 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { AlertCircleIcon } from "lucide-react";
+
+import { Alert, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -11,26 +16,38 @@ import {
 } from "./ui/card";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "./ui/field";
 import { Input } from "./ui/input";
-import { useMutation } from "@tanstack/react-query";
-import { backendAPI } from "@/lib/axios";
-import { storeAccessToken } from "@/lib/actions/login.actions";
 
-interface ILoginCredentials {
+import { storeAccessToken } from "@/lib/actions/login.actions";
+import { authLogin } from "@/lib/api/auth.api";
+
+export interface ILoginCredentials {
   username: string;
   password: string;
 }
 
 const LoginCard = () => {
+  const router = useRouter();
+
   const [loginCredentials, SetLoginCredentials] = useState<ILoginCredentials>({
     username: "",
     password: "",
   });
+  const [isIncorrectCredeentials, setIsIncorrectCredentials] =
+    useState<boolean>(false);
 
   const login = useMutation({
-    mutationFn: (credentials: ILoginCredentials) =>
-      backendAPI.post("/api/auth/login", credentials),
-    onSuccess: ({ data }) => storeAccessToken(data.results.access_token),
-    onError: (error: any) => console.error(error.response || error.message),
+    mutationFn: async (credentials: ILoginCredentials) =>
+      await authLogin(credentials),
+    onSuccess: async ({ results, error }) => {
+      if (!error) {
+        await storeAccessToken(results.access_token);
+        setIsIncorrectCredentials(false);
+        router.replace("/");
+      }
+
+      if (error) setIsIncorrectCredentials(true);
+    },
+    onError: (error) => console.error(error),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +72,15 @@ const LoginCard = () => {
         <CardDescription className="text-center">
           Login in to your account
         </CardDescription>
+        {isIncorrectCredeentials && (
+          <Alert
+            className="mx-auto flex border-red-500 bg-red-100 md:max-w-70 md:justify-center"
+            variant="destructive"
+          >
+            <AlertCircleIcon />
+            <AlertTitle>Incorrect login credentials</AlertTitle>
+          </Alert>
+        )}
       </CardHeader>
       <CardContent>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
