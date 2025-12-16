@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Alert, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
 import { getIPInfo } from "@/lib/api/ipInfo.api";
+import SearchHistorySheet from "../SearchHistorySheet";
 
 const HomePage = () => {
   const [ipSearchValue, setIpSearchValue] = useState<string>("");
@@ -66,6 +67,10 @@ const HomePage = () => {
           />
         )}
       </section>
+
+      <div className="fixed right-0 bottom-0 p-4">
+        <SearchHistorySheet />
+      </div>
     </main>
   );
 };

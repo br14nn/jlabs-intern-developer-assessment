@@ -1,5 +1,6 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import {
@@ -9,12 +10,21 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import { getSearchHistory } from "@/lib/api/search-history.api";
 
 const SearchHistorySheet = () => {
+  const { data, refetch } = useQuery({
+    queryKey: ["search-history"],
+    queryFn: async () => await getSearchHistory(),
+  });
+
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="cursor-pointer bg-blue-500 hover:bg-blue-700">
+        <Button
+          className="cursor-pointer bg-blue-500 hover:bg-blue-700"
+          onClick={() => refetch()}
+        >
           History
         </Button>
       </SheetTrigger>
@@ -29,10 +39,14 @@ const SearchHistorySheet = () => {
         </SheetHeader>
 
         <div className="flex flex-col">
-          <Separator />
-          <div className="px-4 py-2">
-            <p className="text-center text-white">Hello World</p>
-          </div>
+          {data?.results.map((history: any, index: number) => (
+            <div key={`${history.id}-${index}`}>
+              <Separator />
+              <div className="px-4 py-2">
+                <p className="text-center text-white">{history.ip_address}</p>
+              </div>
+            </div>
+          ))}
           <Separator />
         </div>
       </SheetContent>
