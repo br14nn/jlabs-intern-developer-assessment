@@ -16,7 +16,7 @@ export class SearchHistoryService {
       const user = await this.authService.verify(authHeader);
       const res = await this.prismaService.searchHistory.findMany({
         where: {
-          id: user.results.sub,
+          userId: user.results.sub,
         },
       });
 
