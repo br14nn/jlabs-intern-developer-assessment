@@ -24,10 +24,20 @@
      npm run start:docker
    ```
 
-4. Available URLs:
-   - http://localhost:3000 - frontend
-   - http://localhost:8000 - backend
-   - http://localhost:5050 - pgAdmin
+4. Fourth Step (Optional) - Installing libraries for frontend and backend directory:
+
+   ```sh
+     cd frontend/
+     npm install
+
+     cd backend/
+     npm install
+   ```
+
+- Available URLs:
+  - http://localhost:3000 - frontend
+  - http://localhost:8000 - backend
+  - http://localhost:5050 - pgAdmin
 
 ## Database Setup
 
