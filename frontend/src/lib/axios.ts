@@ -5,5 +5,5 @@ export const ipInfoAPI = axios.create({
 });
 
 export const backendAPI = axios.create({
-  baseURL: "http://backend:8000",
+  baseURL: "https://jlabs-intern-developer-assessment-backend.onrender.com",
 });
