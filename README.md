@@ -24,7 +24,7 @@
      npm run start:docker
    ```
 
-4. Fourth Step (Optional) - Installing libraries for frontend and backend directory:
+4. Fourth Step - Installing libraries for frontend and backend directory:
 
    ```sh
      cd frontend/
