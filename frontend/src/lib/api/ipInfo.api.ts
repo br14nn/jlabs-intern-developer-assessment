@@ -1,5 +1,3 @@
-"use server";
-
 import { ipInfoAPI } from "../axios";
 
 export async function getIPInfo(ip?: string): Promise<IResponse> {
