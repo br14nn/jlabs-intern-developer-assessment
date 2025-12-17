@@ -50,7 +50,7 @@
    ```
 
 2. Second Step - Prisma generate:
-   
+
    ```sh
      npx prisma generate
    ```
@@ -68,7 +68,16 @@
    ```
 
 - Default user account for logging in the website:
+
   ```sh
     username: root
     password: 1234
+  ```
+
+## Stopping the containers
+
+- `ctrl + c` before you perform this command:
+
+  ```sh
+    npm run stop:docker
   ```
