@@ -49,13 +49,19 @@
      cd jlabs-intern-developer-assessment/backend
    ```
 
-2. Second Step - Pushing the database schema:
+2. Second Step - Prisma generate:
+   
+   ```sh
+     npx prisma generate
+   ```
+
+3. Third Step - Pushing the database schema:
 
    ```sh
      npx prisma db push
    ```
 
-3. Third Step - Seeding the user account:
+4. Fourth Step - Seeding the user account:
 
    ```sh
      npx prisma db seed
